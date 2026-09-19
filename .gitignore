@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+config.local.json
+.env
+reports/
+baselines/
+demo-output/
+dist/
+*.bundle

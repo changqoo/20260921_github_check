@@ -1,0 +1,29 @@
+# Copy to the TARGET repository's .github/workflows/pr-integrity.yml only after
+# installing trusted prguard code/config on a dedicated INTERNAL runner.
+# This template deliberately does not checkout or execute PR code.
+name: PR integrity
+on:
+  pull_request_target:
+    branches: [main, qa, dev]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+  push:
+    branches: [main, qa, dev]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+  statuses: write
+concurrency:
+  group: pr-integrity-${{ github.repository }}
+  cancel-in-progress: false
+jobs:
+  inspect:
+    runs-on: [self-hosted, linux, pr-integrity]
+    timeout-minutes: 30
+    steps:
+      - name: Inspect Git objects using trusted installation
+        working-directory: /opt/pr-integrity-agent
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRGUARD_CONFIG: /etc/prguard/config.json
+        run: python3 -m prguard.github_runner
