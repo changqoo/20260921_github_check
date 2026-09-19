@@ -1,5 +1,7 @@
 # 개인 PC → 개인 GitHub → 사내망 반입
 
+**반입 후 사내 Git 접속정보와 인증을 새로 설정해야 합니다.** 외부 PC의 GitHub.com 로그인은 사내 Git 인증을 대신하지 않습니다. [사내 Git 접속·인증 안내서](INTERNAL_GIT_SETUP.md)에 주소 변경, PAT/SSH 로그인, 사내 CA, Runner 등록과 검증 명령을 정리했습니다.
+
 ## 1. 외부망 PC 준비
 
 이 저장소에는 범용 에이전트와 합성 테스트만 올립니다. `config.local.json`, baseline, 사내 코드, 토큰, 모델 파일, 실제 보고서는 Git 추적 대상에서 제외합니다.
@@ -77,6 +79,17 @@ python3 scripts/demo.py
 ```
 
 Windows 검증은 `Get-FileHash .\pr-integrity-agent-source.zip -Algorithm SHA256` 결과와 `.sha256` 파일을 비교합니다. ZIP의 checksum 파일은 신뢰된 반입 기록과 대조해야 하며, 두 파일을 함께 변조한 공격을 막는 서명은 아닙니다.
+
+### 3-1. 사내 Git 접속·인증 재설정
+
+1. 관리자에게 사내 Git 종류/버전, 웹·clone·API URL, 계정/인증 정책과 CA 인증서를 확인합니다.
+2. 사내 PC에 Git을 설치하고 사내 계정으로 PAT 또는 SSH 인증을 설정합니다.
+3. 제품 저장소를 사내 URL에서 새로 clone합니다. 기존 clone을 재사용하면 fetch URL과 별도 push URL을 모두 확인합니다.
+4. `git ls-remote` 및 `git fetch origin`으로 읽기 권한을 확인하고, 관리자 지정 테스트 저장소의 임시 브랜치에서 push 권한을 확인합니다.
+5. 아래 config의 서버/API 주소, 허용 저장소와 baseline의 repository를 실제 사내 값으로 설정합니다.
+6. 사내 GHES에 Runner를 새로 등록합니다. PR 검사에는 사내 Actions가 발급한 작업용 `GITHUB_TOKEN`을 사용합니다.
+
+구체적인 명령과 인증정보 저장 위치는 [사내 Git 접속·인증 안내서](INTERNAL_GIT_SETUP.md)를 따릅니다. 에이전트 소스 저장소와 검사 대상 제품 저장소는 별개이므로 에이전트의 origin을 제품 저장소로 바꾸지 마세요.
 
 ## 4. 사내 Runner 설치와 파일 배치
 

@@ -87,6 +87,7 @@ python -m prguard prepare --repo C:/work/product --base origin/main --head featu
 ## 문서
 
 - [사내망 반입 · 개인 GitHub 업로드 · 설치](docs/OFFLINE_DEPLOYMENT.md)
+- [사내 Git 접속 주소 · PAT/SSH 인증 · Runner 재등록](docs/INTERNAL_GIT_SETUP.md)
 - [브랜치 운영 · baseline 등록 · 의도적인 기존 코드 수정](docs/OPERATIONS.md)
 - [구조 · 판정 범위 · 안전 경계](docs/ARCHITECTURE.md)
 - [필수 설정 및 인수 테스트](docs/ACCEPTANCE.md)

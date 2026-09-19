@@ -1,5 +1,7 @@
 # 적용 전에 채울 정보
 
+사내 Git 접속·인증을 새로 설정하는 명령은 [사내 Git 접속·인증 안내서](INTERNAL_GIT_SETUP.md)를 따릅니다. 외부 GitHub 로그인은 사내 인증을 대체하지 않습니다.
+
 | 정보 | 현재 가정 / 입력 위치 |
 |---|---|
 | 사내 Git 서비스 | GitHub Enterprise Server. GitLab/Gitea라면 API adapter 교체 필요 |
